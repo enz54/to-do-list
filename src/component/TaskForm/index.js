@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
 import {editTask, deleteTask } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from '@material-ui/core/Icon';
@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { Link } from 'react-router-dom';
 import './style.css';
 
 
@@ -36,26 +35,23 @@ const useStyles = makeStyles((theme) => ({
       },
   }));
 
+function index() {
 
-  export default function ListTask() {
-    const [show, setShow] = useState(false);
-    const [modalStyle] = useState(getModalStyle);
-    const task = useSelector(state => state.task);
-    const dispatch = useDispatch();
-    const classes = useStyles();
-    const taskKeys = Object.keys(task)
-    const taskValues = Object.values(task)
-    console.log('taskValues:', taskValues)
+  const [show, setShow] = useState(false);
+  const [modalStyle] = useState(getModalStyle);
+  const task = useSelector(state => state.task);
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const taskKeys = Object.keys(task)
+  const taskValues = Object.values(task)
+  
 
 
-    const handleClose = () => { setShow(false); }
-    const handleShow = () => { setShow(true); }
-      
-
-    
-    return(
-            <> 
-            {taskKeys.map(key => (
+  const handleClose = () => { setShow(false); }
+  const handleShow = () => { setShow(true); }
+  return (
+    <>
+      { taskKeys.map(key => (
                                 <form className="task-list-form" key={`taskItem_${key}`} >
                                     <ul>
                                     
@@ -96,19 +92,17 @@ const useStyles = makeStyles((theme) => ({
                                                             </table>
                                                     </div>
                                             </Modal>
-                                            <Tooltip title="View" placement="top"><Button className={classes.root} onMouseDown={handleShow}><Icon>search</Icon> </Button></Tooltip> 
-                                        <Tooltip title="Edit" placement="top"><Link to="/editform"><Button className={classes.root} ><Icon>edit</Icon></Button></Link></Tooltip>
+
+                                        <Tooltip title="View" placement="top"><Button className={classes.root} onMouseDown={handleShow}><Icon>search</Icon> </Button></Tooltip> 
+                                        <Tooltip title="Edit" placement="top"><Button className={classes.root} onClick={() => dispatch(editTask(key))}><Icon>edit</Icon></Button></Tooltip>
                                         <Tooltip title="Delete" placement="top"><Button className={classes.root} onClick={() => dispatch(deleteTask(key))}><Icon>delete</Icon></Button></Tooltip>
                                     </div>
                                     </ul>
                                 </form>
                             ))
-                
                 }
-            </>
-        )
-    
-    }
+    </>
+  )
+}
 
-
-
+export default index
